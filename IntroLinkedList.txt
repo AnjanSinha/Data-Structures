@@ -1,0 +1,7 @@
+array = ['apples', 'grapes', 'pears']
+Linked List: apples --> grapes --> pears
+More accurate diagram :
+apples
+3342 --> grapes
+          3453 --> pears
+                   3435 --> null

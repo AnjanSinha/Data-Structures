@@ -1,24 +1,15 @@
-#Creating linked list for 10-->5-->16
-#myLinkedList = {
- #   'head':{
-  #      'value': 10,
-   #     'next': {
-    #        'value':5,
-     #       'next': {
-      #          'value': 16,
-       #         'next': None
-        #    }
-        #}
-    #}
-#}
-class LinkedList:
+class DoublyLinkedList:
     def __init__(self,value):
         self.head = {
             'value': value,     #Value
-            'next': None    #Pointer
+            'next': None ,   #Pointer
+            'prev': None
         }
         self.tail = self.head
         self.length = 1
+
+    def __str__(self) :
+        return f"Head: {self.head} , Tail: {self.tail}"
 
     def printList(self):
         array = []
@@ -31,8 +22,10 @@ class LinkedList:
     def append(self,value):
         newNode = {
             'value': value,
-            'next': None
+            'next': None,
+            'prev': None
         }
+        newNode['prev'] = self.tail
         self.tail['next'] = newNode     #creating pointer for next node
         self.tail = newNode     #The tail is no longer the tail and will update it to the new appended node
         self.length +=1
@@ -40,9 +33,11 @@ class LinkedList:
     def prepend(self,value):
         newNode = {
             'value': value,
-            'next': None
+            'next': None,
+            'prev' : None
         }
         newNode ['next'] = self.head    #Creating pointer for next node which is the head for prepend method.
+        self.head['prev'] = newNode  
         self.head = newNode     #The head is no longer the head after prepend so we'll update it with our prepended node
         self.length+=1
 
@@ -51,18 +46,26 @@ class LinkedList:
             return self.append(value)
         newNode = {
             'value' : value,
-            'next': None
+            'next': None,
+            'prev' : None
         }
         leader = self.traverseToIndex(index-1)
-        holdingPointer = leader['next']
+        follower = leader['next']
         leader['next'] = newNode
-        newNode['next'] = holdingPointer   
+        newNode['prev'] = leader
+        newNode['next'] = follower
+        follower['prev'] = newNode
         self.length+=1
 
     def remove(self,index):
         leader = self.traverseToIndex(index-1)
         unWantedNode = leader['next']
-        leader['next'] = unWantedNode['next']
+        leader['next'] = unWantedNode['next'] 
+        follower = unWantedNode['next']
+        print(follower)
+        if (follower != None):
+            follower['prev'] = unWantedNode['prev']
+
         self.length-=1
 
     def traverseToIndex(self,index):
@@ -73,9 +76,11 @@ class LinkedList:
             counter+=1
         return currentNode
 
-myLinkedList = LinkedList(10)
-myLinkedList.append(5)
-myLinkedList.prepend(1)
-myLinkedList.insert(2,45)
+myLinkedList = DoublyLinkedList(10)
+myLinkedList.prepend(34)
+myLinkedList.insert(1,45 )
+myLinkedList.append(356)
+myLinkedList.append(90)
 myLinkedList.remove(3)
 myLinkedList.printList()
+print(myLinkedList)

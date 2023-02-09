@@ -20,6 +20,9 @@ class LinkedList:
         self.tail = self.head
         self.length = 1
 
+    def __str__(self):
+        return f"Linked List : {self.head} , Tail : {self.tail} , Length : {self.length}"
+
     def printList(self):
         array = []
         currentNode = self.head
@@ -72,10 +75,27 @@ class LinkedList:
             currentNode = currentNode['next']
             counter+=1
         return currentNode
-
+    
+    def reverse(self):
+        if not self.head['next']:
+            return self
+        first = self.head
+        self.tail = self.head
+        second = first['next']
+        while ( second ) :
+            temp = second['next']
+            second['next'] = first
+            first = second
+            second = temp
+        self.head['next'] = None
+        self.head = first
+    
 myLinkedList = LinkedList(10)
 myLinkedList.append(5)
 myLinkedList.prepend(1)
 myLinkedList.insert(2,45)
 myLinkedList.remove(3)
 myLinkedList.printList()
+myLinkedList.reverse()
+myLinkedList.printList()
+print(myLinkedList)

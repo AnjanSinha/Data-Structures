@@ -78,17 +78,17 @@ class LinkedList:
     
     def reverse(self):
         if not self.head['next']:
-            return self
-        first = self.head
-        self.tail = self.head
-        second = first['next']
-        while ( second ) :
-            temp = second['next']
-            second['next'] = first
-            first = second
-            second = temp
-        self.head['next'] = None
-        self.head = first
+            return self     #If there is only one element in the list then simply return that 
+        first = self.head   #keeping track (reference) of the first item 
+        self.tail = self.head    #As the list will reverese the first item will be the last item after reverse so updating the tail as the current head
+        second = first['next']  #keeping track (reference) of the second item
+        while ( second ) :  #As long as the second is not none value
+            temp = second['next']   #Reference of third item
+            second['next'] = first  #Second item pointer will now point to the first item
+            first = second  #First item will now replaced with the second item
+            second = temp   #And the second item reference will hold the third item as a reference
+        self.head['next'] = None    #At last the pointer of the last item which was the first item at beginning will updated to NONE
+        self.head = first   #And the head will updated to the current first item that is the last item at the beginning
     
 myLinkedList = LinkedList(10)
 myLinkedList.append(5)
@@ -96,6 +96,7 @@ myLinkedList.prepend(1)
 myLinkedList.insert(2,45)
 myLinkedList.remove(3)
 myLinkedList.printList()
+print(myLinkedList)
 myLinkedList.reverse()
 myLinkedList.printList()
 print(myLinkedList)
